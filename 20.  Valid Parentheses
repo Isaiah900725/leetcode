@@ -1,0 +1,60 @@
+# 0. 标题
+
+## 链接
+
+https://leetcode.com/problems/valid-parentheses/
+
+## 问题
+
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+有效字符串需满足：
+左括号必须用相同类型的右括号闭合。
+左括号必须以正确的顺序闭合。
+每个右括号都有一个对应的相同类型的左括号。 
+示例 1：
+输入：s = "()"
+输出：true
+示例 2
+输入：s = "()[]{}"
+输出：true
+示例 3：
+输入：s = "(]"
+输出：false
+
+## 方案1
+
+遇到左括号就把右括号压栈，否则弹出判断
+
+```python
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        map = {
+            "{": "}",
+            "[": "]",
+            "(": ")"
+        }
+        for item in s:
+            if item in map:
+                stack.append(map[item])
+            elif len(stack) == 0:
+                return False
+            elif item != stack.pop():
+                return False
+            continue
+        return len(stack) == 0
+```
+
+## 方案2
+
+正则消除法
+
+```python
+class Solution:
+    def isValid(self, s: str) -> bool:
+        while '()' in s or '[]' in s or '{}' in s:
+            s = s.replace('()','').replace('[]','').replace('{}','')
+        return not len(s)
+```
+
+
